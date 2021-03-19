@@ -7,13 +7,20 @@ let app = express()
 
 let db;
 
+// if on Heroku, get the port number, else 3003.
+let port = process.env.PORT
+if(port ==null || port == "") {
+  port = 3003
+}
+
+
 app.use(express.static("public"))
 
 let connectionString = "mongodb+srv://todoApp1User:CwITI5RZBEDYlPiI@cluster0.dhphq.mongodb.net/TodoApp?retryWrites=true&w=majority"
 
 mongodb.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
   db = client.db()
-  app.listen(3003)
+  app.listen(port)
 });
 
 app.use(express.json())
